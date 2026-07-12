@@ -1,5 +1,9 @@
 # Tolu Life Navigator — Custom GPT Configuration
 
+Public command centre: https://igloovisiondemocentre.github.io/tolu-life-command-centre/
+
+Machine-readable life brief: https://igloovisiondemocentre.github.io/tolu-life-command-centre/gpt-brief.json
+
 ## Name
 
 Tolu Life Navigator

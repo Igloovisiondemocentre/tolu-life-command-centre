@@ -1,0 +1,57 @@
+{
+  "schema": "tolu-life-brief/v1",
+  "generated_at": "2026-07-12T12:00:00Z",
+  "owner": "Tolu Ashton Kehinde",
+  "public_app": "https://igloovisiondemocentre.github.io/tolu-life-command-centre/",
+  "source_policy": {
+    "verified": "Supported by an original supplied document or statement.",
+    "recorded": "Present in the command-centre model but not independently confirmed.",
+    "inferred": "A reasonable interpretation which still needs checking.",
+    "scenario": "An adjustable illustration, not a prediction or instruction.",
+    "unknown": "Information required before a confident decision."
+  },
+  "current_focus": {
+    "mode": "stabilise then expand",
+    "principle": "Protect housing, health, essentials and evidence before allocating expected money or expanding risk.",
+    "daily_rule": "One main mission, two support actions and a reduced-power option."
+  },
+  "finance": {
+    "known_default_balances_gbp": 5352,
+    "known_credit_balances_gbp": 5900,
+    "known_default_components": [
+      {"name": "Perch/Lendable", "amount_gbp": 2551, "status": "recorded", "warning": "Verify current owner, balance, charges and enforceability before offering payment."},
+      {"name": "Lowell/Vanquis", "amount_gbp": 2129, "status": "recorded", "warning": "One underlying account; do not double count lender and purchaser."},
+      {"name": "Lantern", "amount_gbp": 672, "status": "recorded"}
+    ],
+    "other_known_credit": [{"name": "O2 device", "amount_gbp": 494, "status": "recorded"}, {"name": "O2 communications", "amount_gbp": 54, "status": "recorded"}],
+    "unknown_exposure": ["Salad Finance schedule", "TFL arrears/current unpaid-fare position", "Housing/rent reconciliation", "Final current creditor balances"],
+    "expected_settlement_gbp": 25800,
+    "expected_settlement_status": "scenario",
+    "settlement_rule": "Expected money is not cleared cash. Do not allocate it until signed, paid and reconciled to the final payslip.",
+    "latest_statement_signals": ["Repeated small food, supermarket and takeaway purchases", "Overlapping TFL, Lime, Uber and rail activity including unpaid-fare entries", "Repeated transfers into Revolut followed by small spending bursts", "Frequent friend/family transfers which need an honest generosity allowance", "Transfers between Tolu-owned accounts must not be classified as spending", "Revolut UK account migration occurred in July 2026"]
+  },
+  "career": {
+    "recommended_positioning": "Enterprise Technology Commercialisation Leader",
+    "proof": ["XR and haptics demonstrations", "Spatial-computing industry exposure", "Public explanation of embodied technology", "Partnership and commercial communication", "Advanced-technology network and event evidence"],
+    "priority_lanes": ["Strategic partnerships", "Enterprise business development", "Commercial leadership", "XR/spatial computing", "Digital twins and simulation", "AI adoption and transformation"],
+    "founder_gate": "Run a 90-day market test, create a paid diagnostic, conduct real buyer conversations and win two paying customers before depending on a new venture.",
+    "empire_rule": "Build one credible revenue engine before expanding into multiple ventures."
+  },
+  "goal_routes": [
+    {"id": "debt", "name": "Debt freedom", "stages": ["Reveal the whole map", "Protect the floor", "Choose the attack", "Rebuild trust"], "linked_tasks": ["CC-003", "CC-006", "CC-009"]},
+    {"id": "tmj", "name": "TMJ recovery", "stages": ["Create symptom baseline", "Build clinical dossier", "Run the referral/treatment pathway", "Recover sustainable capacity"], "linked_tasks": ["CC-004"]},
+    {"id": "empire", "name": "XR/AI business empire", "stages": ["Name one commercial wedge", "Productise the insight", "Sell before scaling", "Build the holding vision"], "linked_tasks": []},
+    {"id": "home", "name": "Stable home", "stages": ["Stop immediate risk", "Secure the next base", "Systemise housing", "Build the family platform"], "linked_tasks": ["CC-008", "CC-009", "CC-011"]},
+    {"id": "legacy", "name": "Trusted legacy", "stages": ["Reduce promise debt", "Build family cadence", "Practise secure connection", "Lead without self-abandonment"], "linked_tasks": []}
+  ],
+  "priority_tasks": [
+    {"id": "CC-002", "area": "Employment/finance", "focus": "Settlement decision and clearance", "decision_gate": "Final wording, adviser certificate, payment date and actual net amount."},
+    {"id": "CC-003", "area": "Debt", "focus": "ACI/Perch/Lendable contact", "decision_gate": "Current owner, statement, charges and affordable disposable income."},
+    {"id": "CC-004", "area": "Health", "focus": "Physiotherapy/TMJ follow-up", "decision_gate": "Current clinical response, next referral and consolidated symptom evidence."},
+    {"id": "CC-008", "area": "Housing/legal", "focus": "Possession-hearing preparation", "decision_gate": "Venue, case details, reconciled payment ledger and adviser position."},
+    {"id": "CC-009", "area": "Housing/finance", "focus": "July rent reconciliation", "decision_gate": "Landlord schedule matched to bank evidence."},
+    {"id": "CC-011", "area": "Housing", "focus": "Move planning", "decision_gate": "Affordability, safety, timing and support."},
+    {"id": "CC-012", "area": "Security", "focus": "Verify account alerts", "decision_gate": "Every device, location and session individually confirmed."}
+  ],
+  "assistant_rules": ["Check generated_at and ask for a newer spreadsheet or app sync when recency matters.", "Never claim browser-local app state is visible through this file.", "Connect recommendations to task IDs, evidence gaps and related life areas.", "Provide a minimum viable action for low-energy days.", "Do not diagnose medical conditions or provide regulated legal or financial advice.", "Never invent balances, deadlines, email contents or source links."]
+}
