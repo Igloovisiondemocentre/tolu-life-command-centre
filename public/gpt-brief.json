@@ -1,6 +1,6 @@
 {
   "schema": "tolu-life-brief/v1",
-  "generated_at": "2026-07-12T12:00:00Z",
+  "generated_at": "2026-07-12T21:20:00Z",
   "owner": "Tolu Ashton Kehinde",
   "public_app": "https://igloovisiondemocentre.github.io/tolu-life-command-centre/",
   "source_policy": {
@@ -44,6 +44,19 @@
     {"id": "home", "name": "Stable home", "stages": ["Stop immediate risk", "Secure the next base", "Systemise housing", "Build the family platform"], "linked_tasks": ["CC-008", "CC-009", "CC-011"]},
     {"id": "legacy", "name": "Trusted legacy", "stages": ["Reduce promise debt", "Build family cadence", "Practise secure connection", "Lead without self-abandonment"], "linked_tasks": []}
   ],
+  "whatsapp_intelligence": {
+    "status": "Six-month backfill complete",
+    "window": "12 January to 12 July 2026",
+    "messages_reviewed": 3506,
+    "indexed_chats": 6,
+    "logic": "Identify whose issue it is, exclude social chatter and other people's work, match people/topic/date to an existing task, add relevant evidence to the timeline, and create a task only for a concrete Tolu action, commitment, deadline or risk.",
+    "high_value_connections": [
+      "Mum: settlement, solicitor, housing, health and bereavement context",
+      "Toro: TMJ hospital treatment, property access, cleaning and belongings",
+      "Ayo: job-loss timing, health context and moving support",
+      "My TLBG children: bereavement context relevant to missed physiotherapy"
+    ]
+  },
   "priority_tasks": [
     {"id": "CC-002", "area": "Employment/finance", "focus": "Settlement decision and clearance", "decision_gate": "Final wording, adviser certificate, payment date and actual net amount."},
     {"id": "CC-003", "area": "Debt", "focus": "ACI/Perch/Lendable contact", "decision_gate": "Current owner, statement, charges and affordable disposable income."},
@@ -51,7 +64,11 @@
     {"id": "CC-008", "area": "Housing/legal", "focus": "Possession-hearing preparation", "decision_gate": "Venue, case details, reconciled payment ledger and adviser position."},
     {"id": "CC-009", "area": "Housing/finance", "focus": "July rent reconciliation", "decision_gate": "Landlord schedule matched to bank evidence."},
     {"id": "CC-011", "area": "Housing", "focus": "Move planning", "decision_gate": "Affordability, safety, timing and support."},
-    {"id": "CC-012", "area": "Security", "focus": "Verify account alerts", "decision_gate": "Every device, location and session individually confirmed."}
+    {"id": "CC-012", "area": "Security", "focus": "Verify account alerts", "decision_gate": "Every device, location and session individually confirmed."},
+    {"id": "CC-013", "area": "Health", "focus": "Review MiTiGate TMJ clinical-trial eligibility", "decision_gate": "Participant information, eligibility, risks and effect on planned surgery discussed with the trial team."},
+    {"id": "CC-014", "area": "Health", "focus": "Follow GP specialist-referral advice", "decision_gate": "Correct local specialist service and required assessment confirmed."},
+    {"id": "CC-015", "area": "Housing", "focus": "Complete NHG annual building-safety survey", "decision_gate": "Safety documents read and survey completed by 28 July 2026."},
+    {"id": "CC-016", "area": "Finance/debt", "focus": "Request written Lantern terms", "decision_gate": "Current balance and exact full-and-final or affordable-instalment terms received in writing."}
   ],
   "assistant_rules": ["Check generated_at and ask for a newer spreadsheet or app sync when recency matters.", "Never claim browser-local app state is visible through this file.", "Connect recommendations to task IDs, evidence gaps and related life areas.", "Provide a minimum viable action for low-energy days.", "Do not diagnose medical conditions or provide regulated legal or financial advice.", "Never invent balances, deadlines, email contents or source links."]
 }
