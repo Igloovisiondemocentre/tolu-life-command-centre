@@ -71,4 +71,11 @@
     {"id": "CC-016", "area": "Finance/debt", "focus": "Request written Lantern terms", "decision_gate": "Current balance and exact full-and-final or affordable-instalment terms received in writing."}
   ],
   "assistant_rules": ["Check generated_at and ask for a newer spreadsheet or app sync when recency matters.", "Never claim browser-local app state is visible through this file.", "Connect recommendations to task IDs, evidence gaps and related life areas.", "Provide a minimum viable action for low-energy days.", "Do not diagnose medical conditions or provide regulated legal or financial advice.", "Never invent balances, deadlines, email contents or source links."]
+  ,"context_bridge": {
+    "schema": "tolu-cc/context-bridge/v1",
+    "authority": "The Personal Command Centre Dashboard is the shared source of truth; chat and browser-local state are inputs until the workbook acknowledges them.",
+    "event_rule": "Match stable Task ID, dedupe by Request ID, preserve exact user facts, update current state plus chronological/work/life logs, then return a receipt.",
+    "receipt_format": "Request ID → Task ID → resulting status",
+    "round_trip": ["App creates contextual events", "Daily Task Update GPT processes the packet into the workbook", "Workbook records completion and history", "App imports the latest workbook and reconciles Request IDs"]
+  }
 }
