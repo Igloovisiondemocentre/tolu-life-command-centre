@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
 
     private void requestWidgetPinOnce() {
         if (android.os.Build.VERSION.SDK_INT < 26) return;
-        if (WidgetStore.prefs(this).getBoolean("pin_requested_v2", false)) return;
+        if (WidgetStore.prefs(this).getBoolean("pin_requested_v3", false)) return;
         AppWidgetManager manager = (AppWidgetManager)getSystemService(APPWIDGET_SERVICE);
         if (manager == null) return;
         try {
@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
             Intent success = new Intent(this, TaskWidgetProvider.class).setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             PendingIntent callback = PendingIntent.getBroadcast(this, 70001, success, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             java.lang.reflect.Method request = AppWidgetManager.class.getMethod("requestPinAppWidget", ComponentName.class, Bundle.class, PendingIntent.class);
-            if (((Boolean)request.invoke(manager, provider, null, callback)).booleanValue()) WidgetStore.prefs(this).edit().putBoolean("pin_requested_v2", true).apply();
+            if (((Boolean)request.invoke(manager, provider, null, callback)).booleanValue()) WidgetStore.prefs(this).edit().putBoolean("pin_requested_v3", true).apply();
         } catch (Exception ignored) {}
     }
 
