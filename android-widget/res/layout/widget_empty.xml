@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_card_low"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="18dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SYSTEM READY"
+        android:textColor="#52F7FF"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="OPEN TOLU'S CC TO LOAD YOUR LIVE MISSIONS"
+        android:textColor="#F5F4ED"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+</LinearLayout>
