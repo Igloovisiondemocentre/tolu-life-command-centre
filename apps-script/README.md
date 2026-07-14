@@ -8,4 +8,4 @@ This optional Google Apps Script turns the app's Source Bridge into direct write
 4. Deploy → New deployment → Web app. Execute as yourself. Allow access to anyone with the deployment URL.
 5. Paste the `/exec` URL and the same secret into the app's Source Bridge.
 
-The endpoint writes only validated values into columns B:H of the first empty Task Controls row. It does not edit Master Tracker, Change Log or Task Timeline directly; the existing scheduled automation remains responsible for those audited changes.
+The endpoint writes only validated values into columns A:H of the first empty Task Controls row, including the app's unique Request ID. Duplicate Request IDs are accepted idempotently without creating another row. It does not edit Master Tracker, Task Work Log, Life Log, Change Log or Task Timeline directly; the existing workbook processor remains responsible for those audited changes.

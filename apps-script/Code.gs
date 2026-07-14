@@ -20,19 +20,22 @@ function doPost(e) {
       return output_({ ok: false, error: 'Unauthorised' });
     }
 
-    const allowedActions = ['Add', 'Update', 'Complete', 'Reopen', 'Archive / remove', 'Restore', 'Cancel'];
-    const allowedFields = ['Entire item', 'Item title', 'Category', 'Status', 'Priority', 'Next Action', 'Due Date', 'Waiting On', 'Notes', 'Conversation With', 'Conversation Context', 'Gmail Thread', 'Finance amount/status', 'Calendar date/time'];
-    if (!payload.target || !allowedActions.includes(payload.action) || !allowedFields.includes(payload.field)) {
+    const allowedActions = ['Add', 'Update', 'Complete', 'Reopen', 'Archive / remove', 'Restore', 'Cancel', 'Save plan', 'Log progress', 'Log check-in', 'Log win'];
+    const allowedFields = ['Entire item', 'Item title', 'Category', 'Status', 'Priority', 'Next Action', 'Due Date', 'Waiting On', 'Notes', 'Conversation With', 'Conversation Context', 'Gmail Thread', 'Finance amount/status', 'Calendar date/time', 'Planner progress', 'Check-in', 'Win'];
+    if (!payload.requestId || !payload.target || !allowedActions.includes(payload.action) || !allowedFields.includes(payload.field)) {
       return output_({ ok: false, error: 'Invalid Task Controls request' });
     }
 
     const sheet = SpreadsheetApp.openById(COMMAND_SHEET_ID).getSheetByName(CONTROL_TAB);
-    const targets = sheet.getRange(6, 2, sheet.getMaxRows() - 5, 1).getDisplayValues();
-    const emptyOffset = targets.findIndex(row => !row[0]);
+    const requestIds = sheet.getRange(6, 1, sheet.getMaxRows() - 5, 1).getDisplayValues();
+    const duplicate = requestIds.findIndex(row => row[0] === String(payload.requestId));
+    if (duplicate >= 0) return output_({ ok: true, row: 6 + duplicate, requestId: String(payload.requestId), duplicate: true });
+    const emptyOffset = requestIds.findIndex(row => !row[0]);
     if (emptyOffset < 0) return output_({ ok: false, error: 'Task Controls queue is full' });
     const row = 6 + emptyOffset;
 
-    sheet.getRange(row, 2, 1, 7).setValues([[
+    sheet.getRange(row, 1, 1, 8).setValues([[
+      String(payload.requestId),
       String(payload.target),
       String(payload.action),
       String(payload.field),
@@ -42,11 +45,10 @@ function doPost(e) {
       'Yes'
     ]]);
     SpreadsheetApp.flush();
-    return output_({ ok: true, row: row, requestId: sheet.getRange(row, 1).getDisplayValue() });
+    return output_({ ok: true, row: row, requestId: String(payload.requestId) });
   } catch (error) {
     return output_({ ok: false, error: String(error && error.message || error) });
   } finally {
     lock.releaseLock();
   }
 }
-
