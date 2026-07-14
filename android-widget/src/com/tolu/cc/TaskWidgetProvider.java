@@ -22,6 +22,11 @@ public class TaskWidgetProvider extends AppWidgetProvider {
         for (int id : ids) manager.updateAppWidget(id, build(context, id));
     }
 
+    @Override public void onEnabled(Context context) {
+        super.onEnabled(context);
+        refreshAll(context);
+    }
+
     @Override public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (ACTION_COMPLETE.equals(intent.getAction())) {
@@ -86,8 +91,6 @@ public class TaskWidgetProvider extends AppWidgetProvider {
         root.setOnClickPendingIntent(R.id.open_app, PendingIntent.getActivity(context, 90001, open, flags));
         Intent next = new Intent(context, TaskWidgetProvider.class).setAction(ACTION_NEXT);
         root.setOnClickPendingIntent(R.id.next_task, PendingIntent.getBroadcast(context, 90002 + widgetId, next, flags));
-        root.setInt(R.id.task_flipper, "setFlipInterval", 60000);
-        root.setBoolean(R.id.task_flipper, "setAutoStart", true);
         return root;
     }
 
