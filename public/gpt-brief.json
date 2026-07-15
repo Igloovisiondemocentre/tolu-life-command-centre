@@ -77,5 +77,11 @@
     "event_rule": "Match stable Task ID, dedupe by Request ID, preserve exact user facts, update current state plus chronological/work/life logs, then return a receipt.",
     "receipt_format": "Request ID → Task ID → resulting status",
     "round_trip": ["App creates contextual events", "Daily Task Update GPT processes the packet into the workbook", "Workbook records completion and history", "App imports the latest workbook and reconciles Request IDs"]
+  },
+  "calendar_bridge": {
+    "authority": "Google Calendar is authoritative for scheduled time; Calendar & Deadlines records its relationship to the task and event.",
+    "dedupe_rule": "Search the exact TOLU-CC event token first, then same Task ID/date/time, before creating an event.",
+    "required_fields": ["Related Task ID", "Google Calendar Event ID", "Event URL", "Last Calendar Sync", "Calendar status"],
+    "automatic_rule": "Appointments and hard deadlines should become events; ordinary tasks become events only when Tolu deliberately schedules protected time."
   }
 }

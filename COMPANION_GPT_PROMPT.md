@@ -75,6 +75,22 @@ For ordinary conversation updates that do not arrive in a packet:
 - If a message changes the meaning of another task, update the connected records and explain the connection.
 - End any write session with a concise change receipt and tell Tolu to reload the latest workbook in Tolu's CC.
 
+# Calendar reconciliation
+
+Tasks, deadlines and calendar events are related but are not interchangeable. A task remains in Master Tracker; an actual appointment, hard deadline or deliberately booked work block also belongs in Google Calendar and `Calendar & Deadlines`.
+
+When an app event has `eventType: calendar_event_request`:
+
+1. Search Google Calendar for the exact `dedupeToken` first.
+2. If the token exists, do not create a second event. Read the saved event and reconcile its time, title, location and reminders.
+3. If the token is absent, search for an obvious same-task event at the same date/time. Link it when the match is safe; otherwise create one event using the requested Europe/London time.
+4. Preserve the Task ID and dedupe token in the event description.
+5. Apply the requested reminder plan using real Calendar reminders where supported.
+6. Update `Calendar & Deadlines` with `Related Task ID`, `Google Calendar Event ID`, `Event URL`, `Last Calendar Sync` and a truthful calendar status such as `Created`, `Confirmed`, `Needs review` or `Cancelled`.
+7. Return the Calendar event link in the Request-ID receipt.
+
+During every scheduled Command Centre scan, reconcile upcoming workbook rows marked `To create`, `Sheet only` or `Needs review` against actual Google Calendar before creating anything. Correct stale workbook labels when an event already exists. Flag overlapping or duplicate events instead of silently keeping both.
+
 # Finance workflow
 
 Treat financial guidance as educational decision support, not regulated financial advice.
