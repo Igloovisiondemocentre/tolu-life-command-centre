@@ -181,7 +181,68 @@ function Vitals({energy,mood,onCheck}:{energy:number;mood:number;onCheck:()=>voi
 function Momentum({done}:{done:number}){return <section className="mini momentum panel"><span className="eyebrow">MOMENTUM</span><div className="ring" style={{"--p":`${Math.max(8,done*10)}%`} as React.CSSProperties}><strong>{done}</strong><span>WINS</span></div><p>Returning counts. The next action counts more.</p></section>}
 function Reduced({mission,complete}:{mission:Mission|undefined;complete:(s:string)=>void}){return <section className="reduced-card panel"><MoonStar/><span className="eyebrow">REDUCED POWER // NO SHAME, NO DRIFT</span><h2>Today only needs one honest win.</h2>{mission&&<><h3>{mission.title}</h3><p>{mission.next}</p><button className="primary" onClick={()=>complete(mission.id)}>Complete minimum win <Check/></button></>}<div className="care-row"><span>Drink water</span><span>Eat something</span><span>Message someone safe</span></div></section>}
 
-function Missions({items,timeline,workLog,done,complete,saveProgress,openUpdates}:{items:Mission[];timeline:TimelineEntry[];workLog:TaskWorkEntry[];done:string[];complete:(s:string)=>void;saveProgress:(mission:Mission,planSteps:string[],checked:string[],workNote:string,nextWorkSession:string)=>void;openUpdates:()=>void}){const [filter,setFilter]=useState("All");const [selected,setSelected]=useState<Mission>();const shown=items.filter(m=>filter==="All"||m.priority===filter||(filter==="Waiting"&&m.status==="Waiting"));return <div className="page"><PageHead eyebrow="MISSION CONTROL // SOURCE LINKED" title="Make the next move obvious." text="Every task can open its original email, reveal the history that produced it and generate a situation-specific action plan."/><div className="filters">{["All","Critical","High","Waiting"].map(f=><button className={filter===f?"active":""} onClick={()=>setFilter(f)} key={f}>{f}</button>)}</div><div className="mission-list">{shown.map(m=>{const isDone=done.includes(m.id)||m.status==="Completed";return <article className={`list-card panel ${isDone?"is-done":""}`} key={m.id}><button className="check" onClick={()=>complete(m.id)}>{isDone?<Check/>:null}</button><div><span className={`tag ${m.priority.toLowerCase()}`}>{m.priority} // {m.category}</span><h3>{m.title}</h3><p>{m.next}</p><footer><span><Clock3/> Due {m.due}</span><span><ShieldCheck/> {m.status}</span><button onClick={()=>setSelected(m)}><History/> {m.timelineEvents||timeline.filter(e=>e.taskId===m.id).length} events</button>{m.sourceUrl&&<a href={gmailUrl(m.sourceUrl)} target="_blank" rel="noreferrer"><ExternalLink/> Open source</a>}<span>{m.id}</span></footer></div><button className="open-record" onClick={()=>setSelected(m)}><ChevronRight/></button></article>})}</div>{selected&&<MissionDetail mission={selected} all={items} history={timeline.filter(e=>e.taskId===selected.id)} workLog={workLog.filter(e=>e.taskId===selected.id)} onClose={()=>setSelected(undefined)} complete={complete} saveProgress={saveProgress} done={done.includes(selected.id)||selected.status==="Completed"} openUpdates={openUpdates}/>}</div>}
+function Missions({items,timeline,workLog,done,complete,saveProgress,openUpdates}:{items:Mission[];timeline:TimelineEntry[];workLog:TaskWorkEntry[];done:string[];complete:(s:string)=>void;saveProgress:(mission:Mission,planSteps:string[],checked:string[],workNote:string,nextWorkSession:string)=>void;openUpdates:()=>void}) {
+  const [filter,setFilter]=useState("All");
+  const [selected,setSelected]=useState<Mission>();
+  const [hideClosed,setHideClosed]=useStored("tolu-hide-closed-tasks",true);
+  const filters=["All","Open","Critical","High","Waiting","Closed"];
+  const closedStatuses=["completed","complete","closed","resolved","archived","cancelled","canceled"];
+  const isClosed=(m:Mission)=>{
+    const status=(m.status||"").trim().toLowerCase();
+    return done.includes(m.id)||closedStatuses.some(value=>status===value||status.startsWith(value+" "));
+  };
+  const isWaiting=(m:Mission)=>{
+    const status=(m.status||"").trim().toLowerCase();
+    const waiting=(m.waiting||"").trim().toLowerCase();
+    const waitingOnSomeone=Boolean(waiting&&!["tolu","none","n/a","na","-"].includes(waiting));
+    return !isClosed(m)&&(/waiting|pending|on hold|blocked/.test(status)||waitingOnSomeone);
+  };
+  const matches=(m:Mission,view:string)=>{
+    const priority=(m.priority||"").trim().toLowerCase();
+    if(view==="All") return true;
+    if(view==="Open") return !isClosed(m);
+    if(view==="Closed") return isClosed(m);
+    if(view==="Waiting") return isWaiting(m);
+    return !isClosed(m)&&priority===view.toLowerCase();
+  };
+  const shown=items.filter(m=>(!hideClosed||filter==="Closed"||!isClosed(m))&&matches(m,filter));
+  const countFor=(view:string)=>items.filter(m=>(!hideClosed||view==="Closed"||!isClosed(m))&&matches(m,view)).length;
+  return <div className="page">
+    <PageHead eyebrow="MISSION CONTROL // SOURCE LINKED" title="Make the next move obvious." text="Every task can open its original email, reveal the history that produced it and generate a situation-specific action plan."/>
+    <div className="mission-filter-bar">
+      <div className="filters">
+        {filters.map(f=><button className={filter===f?"active":""} onClick={()=>setFilter(f)} key={f}><span>{f}</span><b>{countFor(f)}</b></button>)}
+      </div>
+      <button className={"closed-toggle "+(hideClosed?"active":"")} onClick={()=>setHideClosed(!hideClosed)} aria-pressed={hideClosed}>
+        <i>{hideClosed?"×":"✓"}</i>
+        <span>{hideClosed?"Closed tasks hidden":"Closed tasks visible"}</span>
+      </button>
+    </div>
+    <div className="mission-list">
+      {shown.map(m=>{
+        const isDone=isClosed(m);
+        return <article className={"list-card panel "+(isDone?"is-done":"")} key={m.id}>
+          <button className="check" onClick={()=>complete(m.id)}>{isDone?<Check/>:null}</button>
+          <div>
+            <span className={"tag "+m.priority.toLowerCase()}>{m.priority} // {m.category}</span>
+            <h3>{m.title}</h3>
+            <p>{m.next}</p>
+            <footer>
+              <span><Clock3/> Due {m.due}</span>
+              <span><ShieldCheck/> {m.status}</span>
+              <button onClick={()=>setSelected(m)}><History/> {m.timelineEvents||timeline.filter(e=>e.taskId===m.id).length} events</button>
+              {m.sourceUrl&&<a href={gmailUrl(m.sourceUrl)} target="_blank" rel="noreferrer"><ExternalLink/> Open source</a>}
+              <span>{m.id}</span>
+            </footer>
+          </div>
+          <button className="open-record" onClick={()=>setSelected(m)}><ChevronRight/></button>
+        </article>
+      })}
+    </div>
+    {!shown.length&&<div className="empty-missions panel"><ListTodo/><h3>No tasks match this view.</h3><p>Try another filter or change the closed-task visibility.</p></div>}
+    {selected&&<MissionDetail mission={selected} all={items} history={timeline.filter(e=>e.taskId===selected.id)} workLog={workLog.filter(e=>e.taskId===selected.id)} onClose={()=>setSelected(undefined)} complete={complete} saveProgress={saveProgress} done={isClosed(selected)} openUpdates={openUpdates}/>}
+  </div>
+}
 
 function situationPlan(m:Mission){const plans:Record<string,{call:string;why:string;steps:string[];gap:string}>={
  "CC-003":{call:"Do not promise a payment amount on the first call.",why:"The report shows Lendable at £0 current balance but a £2,551 default balance, while collection activity refers to Perch/ACI. Ownership and the enforceable current balance need confirming first.",steps:["Ask ACI to confirm who owns the account and send a full statement in writing.","Explain the employment transition and ask for a temporary hold while you complete an income-and-expenditure budget.","After essentials, use the debt lab to calculate an affordable pro-rata monthly offer or a conditional lump-sum offer.","Do not pay a partial settlement until written terms say the remainder will not be pursued and explain the credit-file treatment."],gap:"Missing: verified current owner, current settlement balance, interest/charges status and monthly disposable income."},
